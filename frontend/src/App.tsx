@@ -1,34 +1,66 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import {MessageType} from "backend/shared/massage.types.ts";
+import {MarketId} from "backend/price-fetchers/types.ts";
 
 const SOCKET_URL = "ws://localhost:4350";
+const coins = [MarketId.BTCUSD, MarketId.ETHUSD, MarketId.SOLUSD, MarketId.AVAXUSD];
 
-const coins = ["BTC", "ETH", "SOL", "ADA"];
-
-function App() {
+const App = () => {
   const [selectedCoin, setSelectedCoin] = useState<string>("BTC");
   const [prices, setPrices] = useState<{ [key: string]: number }>({
     coinMarketCap: 0,
     vertex: 0,
   });
 
+  const socketRef = useRef<WebSocket | null>(null);
+
   useEffect(() => {
     const socket = new WebSocket(SOCKET_URL);
+    socketRef.current = socket;
 
     socket.onopen = () => {
       console.log("Connected to WebSocket");
-      socket.send(JSON.stringify({ type: "subscribe", coin: selectedCoin }));
+
+      const subscribeMessage = {
+        type: MessageType.SUBSCRIBE,
+        data: { marketIds: [selectedCoin] },
+      };
+
+      socket.send(JSON.stringify(subscribeMessage));
     };
 
     socket.onmessage = (event) => {
       const data = JSON.parse(event.data);
-      console.log(data);
-      setPrices({
-        coinMarketCap: data.coinMarketCap || 0,
-        vertex: data.vertex || 0,
-      });
+
+      if (data.type === MessageType.PRICE) {
+        const { sourceId, price } = data.data;
+
+        setPrices((prev) => {
+          const updated = { ...prev };
+
+          if (sourceId.toLowerCase() === 'coinmarketcap') {
+            updated.coinMarketCap = price;
+          }
+
+          if (sourceId.toLowerCase() === 'vertex') {
+            updated.vertex = price;
+          }
+
+          return updated;
+        });
+      }
     };
 
     return () => {
+      const unsubscribeMessage = {
+        type: "unsubscribe",
+        coin: selectedCoin,
+      };
+
+      if (socket.readyState === WebSocket.OPEN) {
+        socket.send(JSON.stringify(unsubscribeMessage));
+      }
+
       socket.close();
     };
   }, [selectedCoin]);
@@ -36,6 +68,7 @@ function App() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-900 text-white">
       <h1 className="text-3xl font-bold mb-6">Crypto Price Comparison</h1>
+
       <select
         value={selectedCoin}
         onChange={(e) => setSelectedCoin(e.target.value)}
@@ -47,9 +80,10 @@ function App() {
           </option>
         ))}
       </select>
+
       <div className="mt-4 p-4 bg-gray-800 rounded shadow-md text-center">
         <h2 className="text-xl font-semibold">{selectedCoin} Prices</h2>
-        <p>CoinMarketCap: ${prices.coinMarketCap.toFixed(2)}</p>
+        <p>Coin Market Cap: ${prices.coinMarketCap.toFixed(2)}</p>
         <p>Vertex Protocol: ${prices.vertex.toFixed(2)}</p>
       </div>
     </div>
