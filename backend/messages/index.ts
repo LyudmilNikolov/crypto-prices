@@ -2,11 +2,11 @@ import {
   getSubscribersByMarketId,
   subscribeUserToMarket,
   unsubscribeUserFromMarket,
-} from '../database/markets';
-import {Message, MessageType} from "../shared/massage.types";
-import {MarketId, SourceId} from "../price-fetchers/types";
-import {getStringifyMessage} from "../shared/utils/message";
-import {getSocketByUser} from "../database/sockets";
+} from "../database/markets";
+import { Message, MessageType } from "../shared/massage.types";
+import { MarketId, SourceId } from "../price-fetchers/types";
+import { getStringifyMessage } from "../shared/utils/message";
+import { getSocketByUser } from "../database/sockets";
 
 export const processMessage = (userId: string, message: Message): void => {
   const { type, data } = message;
@@ -55,6 +55,7 @@ export const sendMessageToMarketSubscribers = (
 export const getPriceMessage = (
   marketId: MarketId,
   sourceId: SourceId,
+
   price: number,
 ): Message => ({
   type: MessageType.PRICE,

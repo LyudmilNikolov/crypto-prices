@@ -10,7 +10,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "concurrently \"yarn workspace backend dev\" \"yarn workspace frontend dev\"",
-    "format": "concurrently \"yarn pretty-quick --workspace=backend\" \"yarn pretty-quick --workspace=frontend\""
+    "format": "concurrently \"yarn workspace backend format\" \"yarn workspace frontend format\""
   },
   "keywords": [],
   "author": "",
@@ -20,5 +20,6 @@
   },
   "dependencies": {
     "yarn": "^1.22.22"
-  }
+  },
+  "packageManager": "yarn@4.7.0"
 }

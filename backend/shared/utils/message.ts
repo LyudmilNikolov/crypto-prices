@@ -1,4 +1,4 @@
-import {Message, MessageType} from "../massage.types";
+import { Message, MessageType } from "../massage.types";
 
 export const isValidMessageType = (messageType: MessageType): boolean =>
   Object.values(MessageType).includes(messageType);

@@ -1,5 +1,5 @@
-import {isValidMarketId} from "../shared/utils/market";
-import {MarketId} from "../price-fetchers/types";
+import { isValidMarketId } from "../shared/utils/market";
+import { MarketId } from "../price-fetchers/types";
 
 const marketToSubscribersMap = new Map<MarketId, Set<string>>();
 

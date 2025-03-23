@@ -1,9 +1,14 @@
 import { useEffect, useRef, useState } from "react";
-import {MessageType} from "backend/shared/massage.types.ts";
-import {MarketId} from "backend/price-fetchers/types.ts";
+import { MessageType } from "backend/shared/massage.types.ts";
+import { MarketId, SourceId } from "backend/price-fetchers/types.ts";
 
 const SOCKET_URL = "ws://localhost:4350";
-const coins = [MarketId.BTCUSD, MarketId.ETHUSD, MarketId.SOLUSD, MarketId.AVAXUSD];
+const coins = [
+  MarketId.BTCUSD,
+  MarketId.ETHUSD,
+  MarketId.SOLUSD,
+  MarketId.AVAXUSD,
+];
 
 const App = () => {
   const [selectedCoin, setSelectedCoin] = useState<string>("BTC");
@@ -38,11 +43,11 @@ const App = () => {
         setPrices((prev) => {
           const updated = { ...prev };
 
-          if (sourceId.toLowerCase() === 'coinmarketcap') {
+          if (sourceId === SourceId.COINMARKETCAP) {
             updated.coinMarketCap = price;
           }
 
-          if (sourceId.toLowerCase() === 'vertex') {
+          if (sourceId === SourceId.VERTEX) {
             updated.vertex = price;
           }
 
@@ -88,6 +93,6 @@ const App = () => {
       </div>
     </div>
   );
-}
+};
 
 export default App;

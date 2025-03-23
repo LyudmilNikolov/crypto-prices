@@ -1,11 +1,8 @@
-import { getMarketsWithSubscribers } from '../database/markets';
-import {
-  getPriceMessage,
-  sendMessageToMarketSubscribers,
-} from '../messages';
-import {MarketId, SourceId} from "../price-fetchers/types";
-import { getPriceBySourceId } from '../price-fetchers';
-import {PRICES_UPDATE_INTERVAL} from "./constants";
+import { getMarketsWithSubscribers } from "../database/markets";
+import { getPriceMessage, sendMessageToMarketSubscribers } from "../messages";
+import { MarketId, SourceId } from "../price-fetchers/types";
+import { getPriceBySourceId } from "../price-fetchers";
+import { PRICES_UPDATE_INTERVAL } from "./constants";
 
 interface Param {
   marketId: MarketId;

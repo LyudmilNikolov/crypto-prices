@@ -1,7 +1,6 @@
-import {MarketId, type PriceFetcherResult, SourceId} from './types';
-import { getVertexPrice } from './vertex';
-import {getCoinMarketCapPrice} from "./coinmarketcap";
-
+import { MarketId, type PriceFetcherResult, SourceId } from "./types";
+import { getVertexPrice } from "./vertex";
+import { getCoinMarketCapPrice } from "./coinmarketcap";
 
 const sourceIdToPriceFetcherMap = new Map<
   SourceId,

@@ -1,4 +1,4 @@
-import {MarketId, SourceId} from "../price-fetchers/types";
+import { MarketId, SourceId } from "../price-fetchers/types";
 
 interface TypedMessage<Type, Data> {
   data: Data;
@@ -6,9 +6,9 @@ interface TypedMessage<Type, Data> {
 }
 
 export enum MessageType {
-  PRICE = 'PRICE',
-  SUBSCRIBE = 'SUBSCRIBE',
-  UNSUBSCRIBE = 'UNSUBSCRIBE',
+  PRICE = "PRICE",
+  SUBSCRIBE = "SUBSCRIBE",
+  UNSUBSCRIBE = "UNSUBSCRIBE",
 }
 
 export interface SubscribeMessageData {
