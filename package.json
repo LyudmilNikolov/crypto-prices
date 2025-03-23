@@ -6,7 +6,7 @@
     "backend"
   ],
   "description": "",
-  "version": "4.1.0",
+  "version": "1.0.0",
   "main": "index.js",
   "scripts": {
     "dev": "concurrently \"yarn workspace backend dev\" \"yarn workspace frontend dev\"",
@@ -17,5 +17,8 @@
   "license": "ISC",
   "devDependencies": {
     "concurrently": "^9.1.2"
+  },
+  "dependencies": {
+    "yarn": "^1.22.22"
   }
 }
